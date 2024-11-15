@@ -19,22 +19,17 @@ class ProblemCodeforcesAPI(Parser):
     Класс для работы с API Codeforces
     """
 
-    def __init__(self, theme):
+    def __init__(self):
         self.__url = 'https://codeforces.com/api/problemset.problems'
-        # self.__method = {'problemset.problems'}
-        self.__params = {'tags': ''}
         self.problems = []
         self.problems_statistics = []
-        self.theme = theme
 
     def load_data(self):
         """
-        Создает списки, задач по теме и статистики по задачам
+        Создает списки, задач и статистики
         """
 
-        theme = self.theme
-        self.__params['tags'] = theme.lower()
-        response = requests.get(self.__url, params=self.__params)
+        response = requests.get(self.__url)
         problems = response.json()['result']['problems']
         problems_stat = response.json()['result']['problemStatistics']
         self.problems.extend(problems)
@@ -52,8 +47,15 @@ class ProblemCodeforcesAPI(Parser):
         Возвращает список статистики по задачам
         """
 
-        return self.problems
+        return self.problems_statistics
 
 
-a = ProblemCodeforcesAPI('brute force')
-print(a.get_problems)
+# a = ProblemCodeforcesAPI()
+# a.load_data()
+# # b = a.get_problems
+# # print(b.count())
+# b = a.problems
+# print(len(b))
+# print(b)
+# print(b.count())
+# print(a.problems)
