@@ -24,11 +24,18 @@ def test_str(capsys):
     assert message.out == ('Задача № 123_A. Задача-задача. Темы: math. Сложность: 1000. Количество решений: 500\n')
 
 
-# def test_cast_to_object_2(problems_fix_1):
-#     """
-#     Проверяет класс объектов в списке
-#     """
-#     for i in problems_fix_1:
-#         assert type(i) == ProblemObject
+def test_get_to_object_list_1(objects_fix_1):
+    """
+    Тестирует метод создания списка объектов класса ProblemObject
+    """
+    assert type(objects_fix_1) == list
+
+
+def test_cast_to_object_2(objects_fix_1):
+    """
+    Проверяет класс объектов в списке
+    """
+    for i in objects_fix_1:
+        assert type(i) == ProblemObject
 
 
