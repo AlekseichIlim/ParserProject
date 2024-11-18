@@ -8,32 +8,22 @@ class ProblemObject:
         self.contest_id = contest_id
         self.rating = rating
 
-
     def __str__(self):
         return f'Задача № {self.contest_id}_{self.index}. {self.name}. Темы: {self.tags}. Сложность: {self.rating}. Количество решений: {self.solved_count}'
 
     @classmethod
-    def get_to_object_list(cls, list_problems, list_stat):
+    def get_to_object_list(cls, list_problems):
         """
-        Преобразование набора данных из списка задач и статистики в список объектов класса ProblemObject
+        Преобразование набора данных из списка задач в список объектов класса ProblemObject
         """
         object_list = []
-        for problem, stat in zip(list_problems, list_stat):
+        for problem in list_problems:
             if problem.get('rating'):
                 object_list.append(
-                    cls(problem['index'], problem['name'], problem['tags'], stat['solvedCount'],
+                    cls(problem['index'], problem['name'], problem['tags'], problem['solvedCount'],
                         problem['contestId'], problem['rating']))
             else:
                 object_list.append(
-                    cls(problem['index'], problem['name'], problem['tags'], stat['solvedCount'],
+                    cls(problem['index'], problem['name'], problem['tags'], problem['solvedCount'],
                         problem['contestId'], None))
         return object_list
-
-    def verify_rating(self, obj):
-        """
-        Проверка наличия ключа 'rating'
-        """
-        if obj['rating']:
-            self.rating = obj['rating']
-        else:
-            self.rating = None
