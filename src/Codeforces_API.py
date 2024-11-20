@@ -1,20 +1,7 @@
 import requests
-from abc import ABC, abstractmethod
 
 
-class Parser(ABC):
-
-    @abstractmethod
-    def __init__(self):
-        self.__url = ''
-        self.__params = {}
-
-    @abstractmethod
-    def load_data(self):
-        pass
-
-
-class ProblemCodeforcesAPI(Parser):
+class ProblemCodeforcesAPI:
     """
     Класс для работы с API Codeforces
     """
@@ -40,6 +27,8 @@ class ProblemCodeforcesAPI(Parser):
         Возвращает список задач
         """
 
+        self.load_data()
+
         return self.problems
 
     def get_problems_statistics(self):
@@ -47,15 +36,18 @@ class ProblemCodeforcesAPI(Parser):
         Возвращает список статистики по задачам
         """
 
+        self.load_data()
+
         return self.problems_statistics
 
+    def get_consolidation_lists(self):
+        """
+        Объединяет списки задач и статистики
+        """
 
-# a = ProblemCodeforcesAPI()
-# a.load_data()
-# # b = a.get_problems
-# # print(b.count())
-# b = a.problems
-# print(len(b))
-# print(b)
-# print(b.count())
-# print(a.problems)
+        self.load_data()
+
+        for problem, stat in zip(self.problems, self.problems_statistics):
+            problem['solvedCount'] = stat['solvedCount']
+
+        return self.problems
