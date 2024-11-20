@@ -18,17 +18,17 @@ def test_str(capsys):
     """
     Тестирует print экземпляра
     """
-    test_p = ProblemObject(123, 'A', 'Задача-задача', 'math', 1000, 500)
+    test_p = ProblemObject(123, 'Задача-задача', 'math',500, 'A', 1000)
     print(test_p)
     message = capsys.readouterr()
-    assert message.out == ('Задача № 123_A. Задача-задача. Темы: math. Сложность: 1000. Количество решений: 500\n')
+    assert message.out == ('Задача № A_123. Задача-задача. Темы: math. Сложность: 1000. Количество решений: 500\n')
 
 
-def test_get_to_object_list_1(objects_fix_1):
+def test_get_to_object_list_1(consolidation_lists_fix):
     """
     Тестирует метод создания списка объектов класса ProblemObject
     """
-    assert type(objects_fix_1) == list
+    assert type(consolidation_lists_fix) == list
 
 
 def test_cast_to_object_2(objects_fix_1):
