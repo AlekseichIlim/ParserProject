@@ -1,8 +1,5 @@
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-
 from src.db_manager import get_themes_list, get_rating_list, get_problems_with_theme_and_rating
-from src.models import Problem, Base
+from src.models import Problem
 
 
 def test_get_themes_list(db_session):
