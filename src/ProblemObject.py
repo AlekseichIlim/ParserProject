@@ -12,7 +12,7 @@ class ProblemObject:
         self.rating = rating
 
     def __str__(self):
-        return f'Задача № {self.contest_id}_{self.index}. {self.name}. Темы: {self.tags}. Сложность: {self.rating}. Количество решений: {self.solved_count}'
+        return f'Задача № {self.contest_id}{self.index}. {self.name}. Темы: {self.tags}. Сложность: {self.rating}. Количество решений: {self.solved_count}'
 
     @classmethod
     def get_to_object_list(cls, list_problems):
