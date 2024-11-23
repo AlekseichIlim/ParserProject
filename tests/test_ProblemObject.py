@@ -20,7 +20,7 @@ def test_str(capsys):
     test_p = ProblemObject('A', 123, 'Задача-задача', 'math', 1000, 500)
     print(test_p)
     message = capsys.readouterr()
-    assert message.out == ('Задача № A_123. Задача-задача. Темы: math. Сложность: 1000. Количество решений: 500\n')
+    assert message.out == ('Задача № A123. Задача-задача. Темы: math. Сложность: 1000. Количество решений: 500\n')
 
 
 def test_get_to_object_list_1(consolidation_lists_fix):
