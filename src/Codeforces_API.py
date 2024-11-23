@@ -11,7 +11,6 @@ class ProblemCodeforcesAPI:
         self.problems = []
         self.problems_statistics = []
 
-
     def load_data(self):
         """
         Создает списки, задач и статистики

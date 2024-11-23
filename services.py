@@ -39,7 +39,7 @@ def on_click(message):
 
 @bot.message_handler(content_types=['text'])
 def after_text_1(message):
-    # theme = message.text
+    
     bot.send_message(message.from_user.id, "Введите тему из предложенных вариантов:")
     bot.send_message(message.from_user.id, f'Темы:{get_themes_list(session)}')
     bot.register_next_step_handler(message, after_text_2)
@@ -57,22 +57,27 @@ def after_text_2(message):
 
 @bot.message_handler()
 def compilation(message, theme):
-    rating = int(message.text)
-    bot.send_message(message.chat.id, "Получение подборки...")
-    problems = get_compilation_problems(session, theme, rating)
-    count = len(problems)
-    num = 0
-    if count != 0:
-        if count < 10:
-            bot.send_message(message.chat.id, f"Всего найдено задач по данному запросу: {count}")
-        for i in problems:
-            num += 1
-            bot.send_message(message.chat.id, f'{num}# {str(i)}')
-        bot.send_message(message.chat.id, "Выберите действие:", reply_markup=markup)
-    else:
-        bot.send_message(message.chat.id, f"По вашему запросу ничего не найдено.")
+    if message.text.isdigit() is False:
+        bot.send_message(message.chat.id, "Проверьте введенные данные")
         after_text_1(message)
-    bot.register_next_step_handler(message, on_click)
+
+    else:
+        rating = int(message.text)
+        bot.send_message(message.chat.id, "Получение подборки...")
+        problems = get_compilation_problems(session, theme, rating)
+        count = len(problems)
+        num = 0
+        if count != 0:
+            if count < 10:
+                bot.send_message(message.chat.id, f"Всего найдено задач по данному запросу: {count}")
+            for i in problems:
+                num += 1
+                bot.send_message(message.chat.id, f'{num}# {str(i)}')
+            bot.send_message(message.chat.id, "Выберите действие:", reply_markup=markup)
+        else:
+            bot.send_message(message.chat.id, f"По вашему запросу ничего не найдено.")
+            after_text_1(message)
+        bot.register_next_step_handler(message, on_click)
 
 
 bot.polling(none_stop=True)
