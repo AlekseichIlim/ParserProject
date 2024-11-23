@@ -2,11 +2,11 @@ import telebot
 from telebot import types
 
 from config import TELEGRAM_TOKEN
-from main import engine
+from main import engine, session
 
 from src.db_manager import get_themes_list, get_rating_list
 from src.functions import get_compilation_problems, main
-from src.utils import session
+
 
 
 bot = telebot.TeleBot(TELEGRAM_TOKEN)
@@ -67,9 +67,10 @@ def compilation(message, theme):
         for i in problems:
             num += 1
             bot.send_message(message.chat.id, f'{num}# {str(i)}')
+        bot.send_message(message.chat.id, "Выберите действие:")
     else:
         bot.send_message(message.chat.id, f"По вашему запросу ничего не найдено.")
-        bot.register_next_step_handler(message, after_text_1)
+        after_text_1(message)
     bot.register_next_step_handler(message, on_click)
 
 
