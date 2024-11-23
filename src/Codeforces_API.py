@@ -11,12 +11,13 @@ class ProblemCodeforcesAPI:
         self.problems = []
         self.problems_statistics = []
 
+
     def load_data(self):
         """
         Создает списки, задач и статистики
         """
 
-        response = requests.get(self.__url)
+        response = requests.get(self.__url, params={'lang': 'ru'})
         problems = response.json()['result']['problems']
         problems_stat = response.json()['result']['problemStatistics']
         self.problems.extend(problems)
