@@ -1,10 +1,8 @@
 import schedule
 
+from src.functions import main
 
-def task():
-    print("I'm working...")
-
-schedule.every().second.do(task)
+schedule.every().hour.do(main)
 
 while True:
     schedule.run_pending()
