@@ -8,15 +8,16 @@ from src.db_manager import get_themes_list, get_rating_list
 from src.functions import get_compilation_problems, main
 
 
-
 bot = telebot.TeleBot(TELEGRAM_TOKEN)
+
+markup = types.ReplyKeyboardMarkup()
+btn1 = types.KeyboardButton(text="Обновить базу данных")
+btn2 = types.KeyboardButton(text="Получить подборку задач")
+markup.row(btn1, btn2)
+
 
 @bot.message_handler(commands=['start'])
 def start(message):
-    markup = types.ReplyKeyboardMarkup()
-    btn1 = types.KeyboardButton(text="Обновить базу данных")
-    btn2 = types.KeyboardButton(text="Получить подборку задач")
-    markup.row(btn1, btn2)
 
     bot.send_message(message.chat.id,
                      f"Привет, {message.from_user.first_name}! Это бот получения подборки из 10 задач, по заданной сложности и тематике, с сервиса Codeforces",
@@ -67,7 +68,7 @@ def compilation(message, theme):
         for i in problems:
             num += 1
             bot.send_message(message.chat.id, f'{num}# {str(i)}')
-        bot.send_message(message.chat.id, "Выберите действие:")
+        bot.send_message(message.chat.id, "Выберите действие:", reply_markup=markup)
     else:
         bot.send_message(message.chat.id, f"По вашему запросу ничего не найдено.")
         after_text_1(message)
