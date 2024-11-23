@@ -1,3 +1,5 @@
+import random
+
 from src.models import Problem, Base
 from sqlalchemy.exc import IntegrityError
 
@@ -17,7 +19,7 @@ def save_data_problems(objects, session):
                 contest_id=problem.contest_id,
                 index=problem.index,
                 name=problem.name,
-                tags=(', '.join(problem.tags)),
+                tags=', '.join(problem.tags),
                 rating=problem.rating,
                 solved_count=problem.solved_count
             )
@@ -37,26 +39,32 @@ def get_themes_list(session):
     themes_list = []
 
     for item in themes:
+
         theme = ', '.join(item)
         themes_list.extend(theme.split(', '))
 
+    themes_list = set(themes_list)
+    sort_list = list(themes_list)
+    sort_list.sort()
+
     session.close()
 
-    return set(themes_list)
+    return sort_list
 
 
 def get_rating_list(session):
     """Получает список сложности задач"""
 
-    ratings = session.query(Problem.rating).all()
-    rating_list = []
-
-    for i in ratings:
-        rating_list.append(i)
-
+    ratings = session.query(Problem.rating).distinct()
+    ratings_list = []
+    for item in ratings:
+        ratings_list.append(*item)
+    ratings_list.remove(None)
+    ratings_list.sort()
+    ratings_list.append(None)
     session.close()
 
-    return set(rating_list)
+    return ratings_list
 
 
 def get_problems_with_theme_and_rating(session, theme, rating):
@@ -66,4 +74,9 @@ def get_problems_with_theme_and_rating(session, theme, rating):
 
     session.close()
 
-    return problems_filter
+    # return problems_filter
+    if len(problems_filter) > 0:
+        random.shuffle(problems_filter)
+        return problems_filter
+    else:
+        return None
