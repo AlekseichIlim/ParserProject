@@ -39,7 +39,7 @@ def on_click(message):
 
 @bot.message_handler(content_types=['text'])
 def after_text_1(message):
-    
+
     bot.send_message(message.from_user.id, "Введите тему из предложенных вариантов:")
     bot.send_message(message.from_user.id, f'Темы:{get_themes_list(session)}')
     bot.register_next_step_handler(message, after_text_2)
