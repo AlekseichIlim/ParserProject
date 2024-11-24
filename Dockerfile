@@ -1,9 +1,14 @@
 FROM python:3-slim
 
-ENV TELEGRAM_API_TOKEN="your_token"
 
-ADD . ./app
+WORKDIR /app
 
-WORKDIR /app/src
-RUN pip install -r requirements.txt
-CMD python main.py
+# Копируем только файл с зависимостями
+COPY /requirements.txt /
+
+# Устанавливаем pip и зависимости
+RUN pip install -r /requirements.txt --no-cache-dir
+
+COPY . .
+
+CMD ["sh", "-c", "python main.py && python start_bot.py && python /src/startscheduler.py"]
