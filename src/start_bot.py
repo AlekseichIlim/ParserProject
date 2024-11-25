@@ -57,6 +57,7 @@ def after_text_2(message):
 
 @bot.message_handler()
 def compilation(message, theme):
+
     if message.text.isdigit() is False:
         bot.send_message(message.chat.id, "Проверьте введенные данные")
         after_text_1(message)
@@ -71,8 +72,11 @@ def compilation(message, theme):
             if count < 10:
                 bot.send_message(message.chat.id, f"Всего найдено задач по данному запросу: {count}")
             for i in problems:
+                markup_2 = types.InlineKeyboardMarkup()
+                markup_2.add(types.InlineKeyboardButton('Перейти к задаче:',
+                                                        url=f'https://codeforces.com/problemset/problem/{i.contest_id}/{i.index}'))
                 num += 1
-                bot.send_message(message.chat.id, f'{num}# {str(i)}')
+                bot.send_message(message.chat.id, f'{num}# {str(i)}', reply_markup=markup_2)
             bot.send_message(message.chat.id, "Выберите действие:", reply_markup=markup)
         else:
             bot.send_message(message.chat.id, f"По вашему запросу ничего не найдено.")
